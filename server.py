@@ -92,6 +92,12 @@ def purchasePlaces():
 
 
 # TODO: Add route for points display
+@app.route("/display")
+def display():
+    public_list = clubs
+    for club in public_list:
+        club.pop("email")
+    return render_template("display.html", public_list=public_list)
 
 
 @app.route("/logout")
