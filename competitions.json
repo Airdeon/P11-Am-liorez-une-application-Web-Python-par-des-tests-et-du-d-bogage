@@ -7,8 +7,13 @@
         },
         {
             "name": "Fall Classic",
-            "date": "2020-10-22 13:30:00",
+            "date": "2022-11-22 13:30:00",
             "numberOfPlaces": "13"
+        },
+        {
+            "name": "Fall Classic 2",
+            "date": "2023-10-22 13:30:00",
+            "numberOfPlaces": "20"
         }
     ]
 }

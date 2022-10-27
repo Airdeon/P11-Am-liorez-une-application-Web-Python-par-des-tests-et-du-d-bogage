@@ -1,5 +1,6 @@
 import json
 from flask import Flask, render_template, request, redirect, flash, url_for
+from datetime import datetime
 
 
 def loadClubs():
@@ -11,6 +12,11 @@ def loadClubs():
 def loadCompetitions():
     with open("competitions.json") as comps:
         listOfCompetitions = json.load(comps)["competitions"]
+        for competitions in listOfCompetitions:
+            if datetime.strptime(competitions["date"], "%Y-%m-%d %H:%M:%S") < datetime.now():
+                competitions["valid"] = False
+            else:
+                competitions["valid"] = True
         return listOfCompetitions
 
 
@@ -35,7 +41,11 @@ def index():
 @app.route("/showSummary", methods=["POST"])
 def showSummary():
     club = [club for club in clubs if club["email"] == request.form["email"]][0]
-    return render_template("welcome.html", club=club, competitions=competitions)
+    return render_template(
+        "welcome.html",
+        club=club,
+        competitions=competitions,
+    )
 
 
 @app.route("/book/<competition>/<club>")
@@ -43,7 +53,11 @@ def book(competition, club):
     foundClub = [c for c in clubs if c["name"] == club][0]
     foundCompetition = [c for c in competitions if c["name"] == competition][0]
     if foundClub and foundCompetition:
-        return render_template("booking.html", club=foundClub, competition=foundCompetition)
+        return render_template(
+            "booking.html",
+            club=foundClub,
+            competition=foundCompetition,
+        )
     else:
         flash("Something went wrong-please try again")
         return render_template("welcome.html", club=club, competitions=competitions)
