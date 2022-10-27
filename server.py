@@ -71,6 +71,9 @@ def purchasePlaces():
     if placesRequired > 12:
         flash("No more than 12 places by club!")
         return render_template("booking.html", club=club, competition=competition)
+    elif placesRequired > int(competition["numberOfPlaces"]):
+        flash("not enouth place in this competition!")
+        return render_template("booking.html", club=club, competition=competition)
     elif placesRequired > int(club["points"]):
         flash("you don't have enouth points")
         flash("points : " + str(club["points"]))
