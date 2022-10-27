@@ -9,6 +9,15 @@
 <body>
     {% if competition['valid'] == True %}
     <h2>{{competition['name']}}</h2>
+    {% with messages = get_flashed_messages()%}
+    {% if messages %}
+    <ul>
+        {% for message in messages %}
+        <li>{{message}}</li>
+        {% endfor %}
+    </ul>
+    {% endif%}
+    {%endwith%}
     Places available: {{competition['numberOfPlaces']}}
     <form action="/purchasePlaces" method="post">
         <input type="hidden" name="club" value="{{club['name']}}">
@@ -19,6 +28,7 @@
     {% else %}
     <p>Impossible de réservé des places pour une compétition déja passé</p>
     {% endif %}
+
 
 </body>
 
